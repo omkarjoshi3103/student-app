@@ -4,18 +4,18 @@ import {  Nav, Form, Button, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 // import 'bootstrap/dist/css/bootstrap-theme.css';
-import Home from './Components/Home';
-import Manage from './Components/Manage';
-import Assesment from './Components/Assesment';
+/* import Home from './Home';
+import Manage from './Manage'; 
+import Assessment from './Assessment'; */
 
 class Front extends React.Component {
 
     //////
-    constructor(props) {
+    /* constructor(props) {
         super(props);
         this.openPage = this.openPage.bind(this);
-    }
-    openPage(pageName, evt) {
+    } */
+    /* openPage(pageName, evt) {
         console.log(pageName);
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -26,20 +26,25 @@ class Front extends React.Component {
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+        console.log(document.getElementById(pageName))
         document.getElementById(pageName).style.display = "block";
         evt.currentTarget.className += " active";
-    }
+    } */
     /////   
     render() {
         return <div>
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="Home">Student Management</Navbar.Brand>
+                <Navbar.Brand href="/">Student Management</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link  onClick = {(evt) => this.openPage('Home',evt)}>Home</Nav.Link>
+                        {/* <Nav.Link  onClick = {(evt) => this.openPage('Home',evt)}>Home</Nav.Link>
                         <Nav.Link  onClick = {(evt) => this.openPage('Manage',evt)}>Manage</Nav.Link>
-                        <Nav.Link  onClick = {(evt) => this.openPage('Assesment',evt)}>Assesment</Nav.Link>
+                        <Nav.Link  onClick = {(evt) => this.openPage('Assessment',evt)}>Assessment</Nav.Link> */}
+                        <Nav.Link href = '/assessment'>Assessment</Nav.Link>
+                        <Nav.Link href = '/manage'>Manage</Nav.Link>
+                        <Nav.Link href = '/logout'>Logout</Nav.Link>
+
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -49,16 +54,16 @@ class Front extends React.Component {
                 </Navbar.Collapse>
             </Navbar>
 
-             <div id="Home" className="tabcontent">
+             {/* <div id="Home" className="tabcontent">
                     <Home />
                 </div>
 
                 <div id="Manage" className="tabcontent">
                     <Manage />
                 </div>
-                <div id="Assesment" className="tabcontent">
-                    <Assesment />
-                </div>
+                <div id="Assessment" className="tabcontent">
+                    <Assessment />
+                </div> */}
         </div>
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import './Manage.css'
-import Register from './Register'
+/* import Register from './Register' */
 class Manage extends React.Component {
 
 
