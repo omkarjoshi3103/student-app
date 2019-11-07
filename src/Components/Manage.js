@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import './Manage.css'
+import { Table, Button, Container, Jumbotron, Form } from 'react-bootstrap';
+import EditStudent from './EditStudent';
 /* import Register from './Register' */
 class Manage extends React.Component {
 
@@ -25,47 +27,58 @@ class Manage extends React.Component {
             })
     }
 
+    
+
+    handleEdit(){
+
+    }
+
     render() {
         const { posts, errorMsg } = this.state
         return (
-            <div className='Manage'>
-                <p>List of Students are as follows: -
-                <button className='top-right' onClick = {(evt) => this.openPage('Register',evt)}>Add New Student></button></p>
-                <table border='5' className="List" align='center' cellPadding='7'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Body</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            posts.length ?
-                                posts.map(post =>
-                                    <tr key={post.id}>
-                                        <td align="center">{post.rollNo}</td>
-                                        <td>{post.name}</td>
-                                        <td>{post.branch}</td>
-                                        <td><button className='table-buttons'>Edit</button></td>
-                                    </tr>
-                                ) :
-                                null
-                        }
-                        {
-                            errorMsg ?
-                                posts.map(post =>
-                                    <tr key='Error'>
-                                        <td>{errorMsg}</td>
-                                    </tr>
-                                ) :
-                                null
+            <Container>
+                <Jumbotron>
+                    
+                    <h2>List of Students</h2>
+                    <Button className='top-right' href="/register">Add New Student></Button>
+                    <Table hover striped bordered>
+                        <thead>
+                            <tr>
+                                <th>RollNo</th>
+                                <th>Name</th>
+                                <th>Body</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                posts.length ?
+                                    posts.map(post =>
+                                            <tr key={post.rollNo}>
+                                                <td align="center">{post.rollNo}</td>
+                                                <td>{post.name}</td>
+                                                <td>{post.branch}</td>
+                                                {/* <td><Button onClick={this.openEditor}>Edit</Button></td> */}
+                                                <td><EditStudent student={post.rollNo}/></td>
+                                            </tr>
+                                    ) :
+                                    null
+                            }
+                            {
+                                errorMsg ?
+                                    posts.map(post =>
+                                        <tr key='Error'>
+                                            <td>{errorMsg}</td>
+                                        </tr>
+                                    ) :
+                                    null
 
-                        }
-                    </tbody>
-                </table>
-            </div>
+                            }
+                        </tbody>
+                    </Table>
+               
+            </Jumbotron>
+        </Container>
         )
     }
 

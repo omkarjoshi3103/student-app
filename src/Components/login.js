@@ -30,7 +30,9 @@ class Login extends Component {
         }
     }
 
-   
+    async componentDidMount(){
+
+    }
 
     handleValidation=(event)=>{
         const {name,value} = event.target;
@@ -112,7 +114,7 @@ class Login extends Component {
                         <p style={styles}>{this.state.errorMsg}</p>
                         <Form>
                         <Form.Group controlId="formBasicusername">
-                            <Form.Label>username address</Form.Label>
+                            <Form.Label>Username</Form.Label>
                             <Form.Control onChange={this.handleValidation} name="username" type="username" placeholder="Enter username" />
                             <Form.Text className="text-muted">
                             We'll never share your username with anyone else.

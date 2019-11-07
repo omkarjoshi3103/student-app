@@ -6,6 +6,8 @@ class Logout extends Component {
 
     render() { 
         localStorage.removeItem('token')
+        /* this.props.changeLoginState(); */
+        console.log(' logout',this.props)
         return ( 
             <Redirect to="/login" />
          );
