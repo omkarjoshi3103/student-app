@@ -102,6 +102,7 @@ class Login extends Component {
     }
 
     render() { 
+        console.log(window.location.pathname)
         const styles={color:'red'}
         const redirectToReferrer = this.state.redirectToReferrer;
         if(redirectToReferrer){

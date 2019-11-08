@@ -31,7 +31,14 @@ class Front extends React.Component {
         evt.currentTarget.className += " active";
     } */
     /////   
+    isLoggedIn(){}
     render() {
+        let navLink ;
+        if (!window.location.pathname === '/login') {
+            navLink = <Nav.Link href = '/logout'>Logout</Nav.Link>
+          } else {
+            navLink = <Nav.Link href = '/login'>Login</Nav.Link>
+          }
         return <div>
             <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand href="/">Student Management</Navbar.Brand>
@@ -43,8 +50,11 @@ class Front extends React.Component {
                         <Nav.Link  onClick = {(evt) => this.openPage('Assessment',evt)}>Assessment</Nav.Link> */}
                         <Nav.Link href = '/assessment'>Assessment</Nav.Link>
                         <Nav.Link href = '/manage'>Manage</Nav.Link>
-                        <Nav.Link href = '/logout'>Logout</Nav.Link>
+                        
+                        {navLink}
 
+                        
+                        
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />

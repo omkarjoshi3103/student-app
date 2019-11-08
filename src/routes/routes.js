@@ -19,7 +19,7 @@ class Routes extends React.Component {
     }  */
     render() { 
         
-        console.log('route',this.props)
+        /* console.log('route',this.props.location) */
         return (
             <div>
                 <Front/>
