@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { ButtonToolbar, Button, Modal, Form } from 'react-bootstrap';
+import React from 'react';
+import { ButtonToolbar, Button, Modal, Form, Col } from 'react-bootstrap';
 
 
 function MyVerticallyCenteredModal(props) {
+    console.log(props.student)
+    
     return (
       <Modal
         {...props}
-        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
@@ -18,25 +19,57 @@ function MyVerticallyCenteredModal(props) {
         <Modal.Body>
             <Form>
                 <Form.Group controlId="formBasicusername">
-                    <Form.Label>username address</Form.Label>
-                    <Form.Control name="username" type="username" placeholder="Enter username" />
-
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control name="username" type="text" defaultValue={props.student.name} placeholder="Enter username" />
+                </Form.Group>
+                <Form.Group controlId="formBasicusername">
+                    <Form.Label>Roll Number</Form.Label>
+                    <Form.Control name="rollNo" type="text" defaultValue={props.student.rollNo} placeholder="Enter username" />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password"  name="password" placeholder="Password" />
+                    <Form.Label>Branch</Form.Label>
+                    <Form.Control type="text"  name="Branch" defaultValue={props.student.branch} placeholder="Select Branch" />
+                </Form.Group> 
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Gender</Form.Label>
+                    <Form.Control as="select"  name="Gender" defaultValue={props.student.gender} placeholder="Gender" >
+                        <option>M</option>
+                        <option>F</option>
+                        <option>O</option>
+                    </Form.Control>
+                </Form.Group>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formBasicPassword">
+                        <Form.Label>Phone</Form.Label>
+                        <Form.Control type="text"  name="Phone" defaultValue={props.student.phone} placeholder="Phone" />
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formBasicPassword">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email"  name="Email" defaultValue={props.student.email} placeholder="Enter Email" />
+                    </Form.Group>                    
+                </Form.Row>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control type="text"  name="City" defaultValue={props.student.city} placeholder="Select City" />
                 </Form.Group>
                 
-                <Button  variant="primary" type="submit">
-                    Submit
-                </Button>
+                
+                {/* Object.keys(props.student).map((keyName, i)=>(
+                    <Form.Group>
+                        <Form.Label>{keyName}</Form.Label>
+                        <Form.Control name={keyName} type="text"  />
+                    </Form.Group>
+                )) */}
+
+                
+                
             </Form>
         </Modal.Body>
         
         
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+        <Button  variant="primary" type="submit"> Submit </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -44,8 +77,11 @@ function MyVerticallyCenteredModal(props) {
   
 function EditStudent (props){   
     const [modalShow, setModalShow] = React.useState(false);
-
-        console.log(props)
+        console.log(props.student)
+        
+        /* Object.keys(props.student).map((keyName, i)=>(
+            
+        )) */
         return ( 
             <ButtonToolbar>
                 <Button variant="primary" onClick={() => setModalShow(true)}>
@@ -53,6 +89,7 @@ function EditStudent (props){
                 </Button>
 
                 <MyVerticallyCenteredModal
+                    student = {props.student}
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />

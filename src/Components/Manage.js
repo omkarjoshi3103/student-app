@@ -34,6 +34,7 @@ class Manage extends React.Component {
     }
 
     render() {
+        console.log(this.props.location)
         const { posts, errorMsg } = this.state
         return (
             <Container>
@@ -59,7 +60,7 @@ class Manage extends React.Component {
                                                 <td>{post.name}</td>
                                                 <td>{post.branch}</td>
                                                 {/* <td><Button onClick={this.openEditor}>Edit</Button></td> */}
-                                                <td><EditStudent student={post.rollNo}/></td>
+                                                <td><EditStudent student={post}/></td>
                                             </tr>
                                     ) :
                                     null
@@ -81,7 +82,6 @@ class Manage extends React.Component {
         </Container>
         )
     }
-
 }
 
 export default Manage;
