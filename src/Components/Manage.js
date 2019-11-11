@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import './Manage.css'
-import { Table, Button, Container, Jumbotron, Form } from 'react-bootstrap';
+import { Table, Button, Container, Jumbotron } from 'react-bootstrap';
 import EditStudent from './EditStudent';
+import API from '../utils/API';
 /* import Register from './Register' */
 class Manage extends React.Component {
 
@@ -16,7 +16,7 @@ class Manage extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://10.44.50.37:8084/student_ru/student/')
+        API.get('/student_find/getstudents/')
             .then(response => {
                 console.log(response.data)
                 this.setState({ posts: response.data })

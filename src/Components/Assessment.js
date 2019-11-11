@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import './Manage.css'
+import API from '../utils/API';
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
@@ -14,10 +14,10 @@ class Assessment extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://10.44.50.37:8084/assessment/')
+        API.get('/assessment/')
             .then(response => {
-                console.log(response.data)
-                this.setState({ posts: response.data })
+                console.log(response.data.data)
+                this.setState({ posts: response.data.data })
             })
             .catch(error => {
                 console.log(error);
@@ -46,12 +46,12 @@ class Assessment extends React.Component {
                         {
                             posts.length ?
                                 posts.map(post =>
-                                    <tr key={post.studentRollNumber}>
-                                        <td>{post.studentRollNumber}</td>
-                                        <td>{post.unitTest}</td>
-                                        <td>{post.midTermTest}</td>
-                                        <td>{post.finalTest}</td>
-                                        <td>{post.grade}</td>
+                                    <tr key={post.student.rollNo}>
+                                        <td>{post.student.rollNo}</td>
+                                        <td>{post.assessment.unitTest}</td>
+                                        <td>{post.assessment.midTermTest}</td>
+                                        <td>{post.assessment.finalTest}</td>
+                                        <td>{post.assessment.grade}</td>
                                         <td><button className='table-buttons'>Edit</button></td>
                                     </tr>
                                 ) :

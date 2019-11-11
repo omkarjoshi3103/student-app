@@ -34,9 +34,9 @@ function MyVerticallyCenteredModal(props) {
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Gender</Form.Label>
                     <Form.Control as="select"  name="Gender" defaultValue={props.student.gender} placeholder="Gender" >
-                        <option>M</option>
-                        <option>F</option>
-                        <option>O</option>
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                        <option value="2">Others</option>
                     </Form.Control>
                 </Form.Group>
                 <Form.Row>

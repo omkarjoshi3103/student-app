@@ -9,7 +9,9 @@ import Manage from './Manage';
 import Assessment from './Assessment'; */
 
 class Front extends React.Component {
-
+    state={
+        navLink:null
+    }
     //////
     /* constructor(props) {
         super(props);
@@ -31,14 +33,23 @@ class Front extends React.Component {
         evt.currentTarget.className += " active";
     } */
     /////   
-    isLoggedIn(){}
+    isLoggedIn(){
+        if (localStorage.getItem('token')!=null) {
+            this.setState({navLink : <Nav.Link href = '/logout'>Logout</Nav.Link>})
+        } else{
+            this.setState({navLink : <Nav.Link href = '/login'>Login</Nav.Link>})
+        }
+    }
+    componentDidMount(){
+        if (localStorage.getItem('token')!=null) {
+            this.setState({navLink : <Nav.Link href = '/logout'>Logout</Nav.Link>})
+        } else{
+            this.setState({navLink : <Nav.Link href = '/login'>Login</Nav.Link>})
+        }
+        
+                        
+    }
     render() {
-        let navLink ;
-        if (!window.location.pathname === '/login') {
-            navLink = <Nav.Link href = '/logout'>Logout</Nav.Link>
-          } else {
-            navLink = <Nav.Link href = '/login'>Login</Nav.Link>
-          }
         return <div>
             <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand href="/">Student Management</Navbar.Brand>
@@ -51,7 +62,10 @@ class Front extends React.Component {
                         <Nav.Link href = '/assessment'>Assessment</Nav.Link>
                         <Nav.Link href = '/manage'>Manage</Nav.Link>
                         
-                        {navLink}
+                            {this.state.navLink}            
+                        
+                        
+
 
                         
                         

@@ -71,7 +71,7 @@ class Login extends Component {
             this.setState({submitted:true})
             /* this.props.changeLoginState(); */
             /* this.login(); */
-            API.post("/assessment/login", {
+            API.post("/user/login", {
                 "username": this.state.username,
                 "password": this.state.password
             }).then((response) => {
@@ -81,11 +81,11 @@ class Login extends Component {
                     localStorage.setItem('token',this.state.username)
                     /* this.props.changeUsername(this.state.username); */
                     console.log('props in login',this.props)
-                    this.props.changeUsername(this.state.username);
+                    /* this.props.changeUsername(this.state.username); */
                     this.setState({ redirectToReferrer: true })
                 }
             }, (error) => {
-                console.log(error.response.status);
+                console.log(error);
                 let errorStatus = error.response.status;
                 switch(errorStatus){
                     case 404:

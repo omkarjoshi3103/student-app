@@ -11,6 +11,8 @@ const PrivateRoute = ({component:Component, exact, strict, path,...rest}) => (
     )} />
 )
 
+
+
 export default PrivateRoute;
 
 
