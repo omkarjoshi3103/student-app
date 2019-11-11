@@ -33,13 +33,7 @@ class Front extends React.Component {
         evt.currentTarget.className += " active";
     } */
     /////   
-    isLoggedIn(){
-        if (localStorage.getItem('token')!=null) {
-            this.setState({navLink : <Nav.Link href = '/logout'>Logout</Nav.Link>})
-        } else{
-            this.setState({navLink : <Nav.Link href = '/login'>Login</Nav.Link>})
-        }
-    }
+    
     componentDidMount(){
         if (localStorage.getItem('token')!=null) {
             this.setState({navLink : <Nav.Link href = '/logout'>Logout</Nav.Link>})

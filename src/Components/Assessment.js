@@ -1,6 +1,8 @@
 import React from 'react';
 import './Manage.css'
 import API from '../utils/API';
+import {Table, Container, Jumbotron} from 'react-bootstrap'
+import EditAssessment from './EditAssessment';
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
@@ -28,12 +30,15 @@ class Assessment extends React.Component {
     render() {
         const { posts, errorMsg } = this.state
         return (
-            <div className='Manage'>
-                <p>List of Students are as follows: -
-                </p>
-                <table border='5' className="List" align='center' cellPadding='7'>
+            <Container>
+                <Jumbotron>
+
+                
+                <h2>Students Assessment</h2>
+                <Table bordered striped>
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Roll No.</th>
                             <th>Unit Test</th>
                             <th>Mid-Term Test</th>
@@ -47,12 +52,13 @@ class Assessment extends React.Component {
                             posts.length ?
                                 posts.map(post =>
                                     <tr key={post.student.rollNo}>
+                                        <td>{post.student.name}</td>
                                         <td>{post.student.rollNo}</td>
                                         <td>{post.assessment.unitTest}</td>
                                         <td>{post.assessment.midTermTest}</td>
                                         <td>{post.assessment.finalTest}</td>
                                         <td>{post.assessment.grade}</td>
-                                        <td><button className='table-buttons'>Edit</button></td>
+                                        {<td><EditAssessment assessment={post}/></td>}
                                     </tr>
                                 ) :
                                 null
@@ -68,8 +74,9 @@ class Assessment extends React.Component {
 
                         }
                     </tbody>
-                </table>
-            </div>
+                </Table>
+                </Jumbotron>
+            </Container>
         )
     }
 
