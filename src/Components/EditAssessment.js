@@ -1,112 +1,123 @@
-import React, { Component, useState } from 'react';
+import React, { Component} from 'react';
 import { ButtonToolbar, Button, Modal, Form} from 'react-bootstrap';
 import API from '../utils/API'
 
-function MyVerticallyCenteredModal(props) {
 
-    const [state, setState] = useState({
-        unitTest:props.student_assessment.assessment.unitTest,
-        midTermTest:props.student_assessment.assessment.midTermTest,
-        finalTest:props.student_assessment.assessment.finalTest,
-    })
+  class EditModal extends Component {
+    state = { 
+        unitTest:this.props.student_assessment.assessment.unitTest,
+        midTermTest:this.props.student_assessment.assessment.midTermTest,
+        finalTest:this.props.student_assessment.assessment.finalTest,
+        errors: {
+            unitTest:'',
+            midTermTest:'',
+            finalTest:''
+        },
+        validity:false
+    }
 
-    const [errors, setErrors] = useState({
-        unitTest:' ',
-        midTermTest:' ',
-        finalTest:' '
-    })
-    const [validity, setValidity] = useState(false)
-
-
-    const handleChange=(event)=>{
+    handleChange=(event)=>{
         event.persist();
         const {name,value} = event.target;
-        setState(state => ({ ...state, [event.target.name]: event.target.value }),
-            ()=>{validateField(name, value)})
+        this.setState({[name]:value},
+            ()=>{this.validateField(name, value)})
         /* console.log(this.state) */
     }
 
-    const validateField=(name, value)=>{
-        let error= errors;
+    validateField=(name, value)=>{
+        
+        let errors= this.state.errors;
         const marksRegex = RegExp(/^(?:[1-9]|0[1-9]|10)$/)
+        let validity = false;
         /* const validEmailRegex = // eslint-disable-next-line 
                         RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i); */
         switch(name){
             case 'unitTest':
+                errors.unitTest = marksRegex.test(value)?"":'Marks should be between 0 to 10';
+                break;
             case 'midTermTest':
+                errors.midTermTest = marksRegex.test(value)?"":'Marks should be between 0 to 10';
+                break;
             case 'finalTest':          /* errors.email = validEmailRegex.test(value)?'':'Email Not Valid'; */
-                error.unitTest = marksRegex.test(value)?'':'Marks should be between 0 to 10';
+                errors.finalTest = marksRegex.test(value)?"":'Marks should be between 0 to 10';
                 break;
             default:
                 break;
         }
-        error.username === "" && error.password === ""? setValidity(true):setValidity(false)
-        setErrors({error, validity, [name]: value}, ()=> {
-            console.log(error)
+        console.log(errors.unitTest === "" && errors.midTermTest === "" && errors.finalTest === "")
+        validity = errors.unitTest === "" && errors.midTermTest === "" && errors.finalTest === "" ? true:false
+        console.log('validity ',validity)
+        this.setState({errors, validity, [name]: value}, ()=> {
+            console.log(errors)
         })
     }
 
-    const handleSubmit = (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
-        console.log(state)
-        API.put('/assessment/assessment_id/'+ props.student_assessment.assessment.assessmentId,{
-            "assessmentId": props.student_assessment.assessment.assessmentId,
-            "studentId": props.student_assessment.student.studentId,
-            "unitTest": state.unitTest,
-            "midTermTest": state.midTermTest,
-            "finalTest": state.finalTest,
-         })
-         props.onHide()
-         window.location.reload()
+        console.log(this.state.validity)
+        if(this.state.validity){    
+            API.put('/assessment/assessment_id/'+ this.props.student_assessment.assessment.assessmentId,{
+                "assessmentId": this.props.student_assessment.assessment.assessmentId,
+                "studentId": this.props.student_assessment.student.studentId,
+                "unitTest": this.state.unitTest,
+                "midTermTest": this.state.midTermTest,
+                "finalTest": this.state.finalTest,
+            })
+            this.props.onHide()
+            window.location.reload()
+            
+        }else{
+            console.log('invalid form')
+        }
 
     }
-   
-    
-
-    
-
-    const styles={color:'red'}
-    
-    return (    
-      <Modal
-        {...props}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Student Assessment Update
-        </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <Form>
-                <p style={styles}>{errors.unitTest}</p>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Unit Test</Form.Label>
-                    <Form.Control type="text"   name="unitTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.unitTest} placeholder="Enter Marks" />
-                </Form.Group> 
-                <p style={styles}>{errors.midTermTest}</p>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Mid-Term Test</Form.Label>
-                    <Form.Control type="text"  name="midTermTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.midTermTest} placeholder="Enter Marks" />
-                </Form.Group>
-                <p style={styles}>{errors.finalTest}</p>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Final Test</Form.Label>
-                    <Form.Control type="text"  name="finalTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.finalTest} placeholder="Enter Marks" />
-                </Form.Group>
-              
-            </Form>
-        </Modal.Body>
-        
-        
-        <Modal.Footer>
-        <Button  variant="primary" type="submit" onClick={handleSubmit}> Submit </Button>
-        </Modal.Footer>
-      </Modal>
-    );
+      render() { 
+        const styles = {color:'red'}
+          return ( 
+            <Modal
+            {...this.props}
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                {this.props.student_assessment.student.name.toUpperCase()}
+            </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    
+                    <Form.Group controlId="formBasicUnitTest">
+                        <Form.Label>Unit Test</Form.Label>
+                        <Form.Control type="text"   name="unitTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.unitTest} placeholder="Enter Marks" />
+                        <span style={styles}>{this.state.errors.unitTest}</span>
+                    </Form.Group> 
+                    
+                    <Form.Group controlId="formBasicMidTermTest">
+                        <Form.Label>Mid-Term Test</Form.Label>
+                        <Form.Control type="text"  name="midTermTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.midTermTest} placeholder="Enter Marks" />
+                        <span style={styles}>{this.state.errors.midTermTest}</span>
+                    </Form.Group>
+                    
+                    <Form.Group controlId="formBasicFinalTest">
+                        <Form.Label>Final Test</Form.Label>
+                        <Form.Control type="text"  name="finalTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.finalTest} placeholder="Enter Marks" />
+                        <span style={styles}>{this.state.errors.finalTest}</span>
+                        </Form.Group>
+                  
+                </Form>
+            </Modal.Body>
+            
+            
+            <Modal.Footer>
+            <Button  variant="primary" type="submit" onClick={this.handleSubmit}> Submit </Button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
   }
-  
+   
+ 
 
 class EditAssessment extends Component {
     state = { modalShow:false }
@@ -119,7 +130,7 @@ class EditAssessment extends Component {
                         Edit
                     </Button>
 
-                    <MyVerticallyCenteredModal
+                    <EditModal
                         student_assessment = {this.props.assessment}
                         show={this.state.modalShow}
                         onHide={() => this.setState({modalShow:false})}

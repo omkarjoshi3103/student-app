@@ -2,7 +2,7 @@ import React from 'react';
 import './Manage.css'
 import API from '../utils/API';
 import {Table, Container, Jumbotron} from 'react-bootstrap'
-import EditAssessment from './EditAssessment1';
+import EditAssessment from './EditAssessment';
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
