@@ -1,13 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { ButtonToolbar, Button, Modal, Form, Col } from 'react-bootstrap';
 
 
 function MyVerticallyCenteredModal(props) {
-    const handleEdit = (event) => {
+
+    const [state, setState] = useState({
+        name:props.student_assessment.student.name,
+        rollNo:props.student_assessment.student.rollNo,
+        unitTest:props.student_assessment.assessment.unitTest,
+        midTermTest:props.student_assessment.assessment.midTermTest,
+        finalTest:props.student_assessment.assessment.finalTest,
+        grade:props.student_assessment.assessment.grade
+    })
+
+    const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(event.target.name)
+        console.log(state)
+        /* API. */
+
     }
-    return (
+   
+    
+
+    const handleChange = (event) => {
+        event.persist();
+        setState(state => ({ ...state, [event.target.name]: event.target.value }));
+        console.log(event.target.value)
+      };
+
+      
+    
+    return (    
       <Modal
         {...props}
         aria-labelledby="contained-modal-title-vcenter"
@@ -23,42 +46,29 @@ function MyVerticallyCenteredModal(props) {
                 <Form.Row>
                     <Form.Group as={Col} controlId="formBasicusername">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control name="username" type="text" defaultValue={props.student_assessment.student.name} placeholder="Enter username" />
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formBasicusername">
-                        <Form.Label>Roll Number</Form.Label>
-                        <Form.Control name="rollNo" type="text" defaultValue={props.student_assessment.student.rollNo} placeholder="Enter username" />
+                        <Form.Control name="name" type="text" onChange={handleChange} defaultValue={props.student_assessment.student.name} placeholder="Enter username" />
                     </Form.Group>
                 </Form.Row>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Unit Test</Form.Label>
-                    <Form.Control type="text"  name="unitTest" defaultValue={props.student_assessment.assessment.unitTest} placeholder="Select Branch" />
+                    <Form.Control type="text"   name="unitTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.unitTest} placeholder="Select Branch" />
                 </Form.Group> 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Mid-Term Test</Form.Label>
-                    <Form.Control type="text"  name="midTermTest" defaultValue={props.student_assessment.assessment.midTermTest} placeholder="Gender" />
+                    <Form.Control type="text"  name="midTermTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.midTermTest} placeholder="Enter Marks" />
                         
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Final Test</Form.Label>
-                    <Form.Control type="text"  name="finalTest" defaultValue={props.student_assessment.assessment.finalTest} placeholder="Phone" />
+                    <Form.Control type="text"  name="finalTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.finalTest} placeholder="Enter Marks" />
                 </Form.Group>
-                <Form.Group  controlId="formBasicPassword">
-                    <Form.Label>Grade</Form.Label>
-                    <Form.Control as="select"  name="grade" defaultValue={props.student_assessment.assessment.grade} placeholder="Enter Email" >
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="Fail">Fail</option>
-                    </Form.Control>
-                </Form.Group>   
+              
             </Form>
         </Modal.Body>
         
         
         <Modal.Footer>
-        <Button  variant="primary" type="submit" onClick={handleEdit}> Submit </Button>
+        <Button  variant="primary" type="submit" onClick={handleSubmit}> Submit </Button>
         </Modal.Footer>
       </Modal>
     );

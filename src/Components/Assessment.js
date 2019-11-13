@@ -40,6 +40,7 @@ class Assessment extends React.Component {
                         <tr>
                             <th>Name</th>
                             <th>Roll No.</th>
+                            <th>Branch</th>
                             <th>Unit Test</th>
                             <th>Mid-Term Test</th>
                             <th>Final Test</th>
@@ -54,6 +55,7 @@ class Assessment extends React.Component {
                                     <tr key={post.student.rollNo}>
                                         <td>{post.student.name}</td>
                                         <td>{post.student.rollNo}</td>
+                                        <td>{post.student.branch}</td>
                                         <td>{post.assessment.unitTest}</td>
                                         <td>{post.assessment.midTermTest}</td>
                                         <td>{post.assessment.finalTest}</td>
