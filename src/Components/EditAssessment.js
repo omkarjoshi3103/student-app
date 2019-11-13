@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { ButtonToolbar, Button, Modal, Form, Col } from 'react-bootstrap';
-
+import API from '../utils/API'
 
 function MyVerticallyCenteredModal(props) {
 
@@ -16,7 +16,15 @@ function MyVerticallyCenteredModal(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(state)
-        /* API. */
+        API.put('/assessment/assessment_id/'+ props.student_assessment.assessment.assessmentId,{
+            "assessmentId": props.student_assessment.assessment.assessmentId,
+            "studentId": props.student_assessment.student.studentId,
+            "unitTest": state.unitTest,
+            "midTermTest": state.midTermTest,
+            "finalTest": state.finalTest,
+         })
+         props.onHide()
+         window.location.reload()
 
     }
    
@@ -43,12 +51,6 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Header>
         <Modal.Body>
             <Form>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formBasicusername">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control name="name" type="text" onChange={handleChange} defaultValue={props.student_assessment.student.name} placeholder="Enter username" />
-                    </Form.Group>
-                </Form.Row>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Unit Test</Form.Label>
                     <Form.Control type="text"   name="unitTest" onChange={handleChange} defaultValue={props.student_assessment.assessment.unitTest} placeholder="Select Branch" />
