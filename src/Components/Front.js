@@ -9,7 +9,9 @@ import Manage from './Manage';
 import Assessment from './Assessment'; */
 
 class Front extends React.Component {
-
+    state={
+        navLink:null
+    }
     //////
     /* constructor(props) {
         super(props);
@@ -31,9 +33,19 @@ class Front extends React.Component {
         evt.currentTarget.className += " active";
     } */
     /////   
+    
+    componentDidMount(){
+        if (localStorage.getItem('token')!=null) {
+            this.setState({navLink : <Nav.Link href = '/logout'>Logout</Nav.Link>})
+        } else{
+            this.setState({navLink : <Nav.Link href = '/login'>Login</Nav.Link>})
+        }
+        
+                        
+    }
     render() {
         return <div>
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand href="/">Student Management</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -43,8 +55,14 @@ class Front extends React.Component {
                         <Nav.Link  onClick = {(evt) => this.openPage('Assessment',evt)}>Assessment</Nav.Link> */}
                         <Nav.Link href = '/assessment'>Assessment</Nav.Link>
                         <Nav.Link href = '/manage'>Manage</Nav.Link>
-                        <Nav.Link href = '/logout'>Logout</Nav.Link>
+                        
+                            {this.state.navLink}            
+                        
+                        
 
+
+                        
+                        
                     </Nav>
                     <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />

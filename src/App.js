@@ -15,13 +15,22 @@ class App extends Component {
 
 
     changeLoginState=()=>{
+      if(this.state.loggedIn){
+        this.setState({loggedIn:false}) 
+      }else{
         this.setState({loggedIn:true})
+      }
         console.log('Inside App loggedIn', this.state)
     }
     render() { 
+      console.log('loggedIn',this.state.loggedIn)
         return ( 
             <Router history={this.history}>
-                <Routes user={this.state.username} changeUsername={this.changeUsername} />
+                <Routes 
+                    {...this.state}
+                    changeUsername={this.changeUsername}
+                    changeLoginState={this.changeLoginState}
+                />
             </Router>
         );
     }

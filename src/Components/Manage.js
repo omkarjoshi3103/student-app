@@ -1,6 +1,9 @@
 import React from 'react';
-import axios from 'axios';
 import './Manage.css'
+import { Table, Button, Container, Jumbotron } from 'react-bootstrap';
+import EditStudent from './EditStudent';
+import API from '../utils/API';
+// import ViewAssesment from './ViewAssesment';
 /* import Register from './Register' */
 class Manage extends React.Component {
 
@@ -14,7 +17,7 @@ class Manage extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://10.44.50.37:8084/student_ru/student/')
+        API.get('student_find/getstudents/')
             .then(response => {
                 console.log(response.data)
                 this.setState({ posts: response.data })
@@ -25,50 +28,65 @@ class Manage extends React.Component {
             })
     }
 
-    render() {
-        const { posts, errorMsg } = this.state
-        return (
-            <div className='Manage'>
-                <p>List of Students are as follows: -
-                <button className='top-right' onClick = {(evt) => this.openPage('Register',evt)}>Add New Student></button></p>
-                <table border='5' className="List" align='center' cellPadding='7'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Body</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            posts.length ?
-                                posts.map(post =>
-                                    <tr key={post.id}>
-                                        <td align="center">{post.rollNo}</td>
-                                        <td>{post.name}</td>
-                                        <td>{post.branch}</td>
-                                        <td><button className='table-buttons'>Edit</button></td>
-                                    </tr>
-                                ) :
-                                null
-                        }
-                        {
-                            errorMsg ?
-                                posts.map(post =>
-                                    <tr key='Error'>
-                                        <td>{errorMsg}</td>
-                                    </tr>
-                                ) :
-                                null
+    
 
-                        }
-                    </tbody>
-                </table>
-            </div>
-        )
+    handleDelete = (data)=>{
+        console.log(data);
     }
 
+    render() {
+        console.log(this.props.location)
+        const { posts, errorMsg } = this.state
+        console.log(posts._id);
+        return (
+            <Container>
+                <Jumbotron>
+                    
+                    <h2>List of Students</h2>
+                    <Button className='top-right' href="/register">Add New Student</Button>
+                    <Table hover striped bordered>
+                        <thead>
+                            <tr>
+                                <th>RollNo</th>
+                                <th>Name</th>
+                                <th>Body</th>
+                                <th>View Assessment</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                posts.length ?
+                                    posts.map(post =>
+                                            <tr key={post.studentId}>
+                                                <td align="center">{post.rollNo}</td>
+                                                <td>{post.name}</td>
+                                                <td>{post.branch}</td>
+                                                <td><a href='/viewAssesment'>View Assesment</a></td>
+                                                <td><EditStudent student={post}/></td>
+                                                <td><Button onClick={this.handleDelete}>Delete</Button></td>
+                                            </tr>
+                                    ) :
+                                    null
+                            }
+                            {
+                                errorMsg ?
+                                    posts.map(post =>
+                                        <tr key='Error'>
+                                            <td>{errorMsg}</td>
+                                        </tr>
+                                    ) :
+                                    null
+
+                            }
+                        </tbody>
+                    </Table>
+               
+            </Jumbotron>
+        </Container>
+        )
+    }
 }
 
 export default Manage;

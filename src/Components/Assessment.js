@@ -1,6 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import './Manage.css'
+import API from '../utils/API';
+import {Table, Container, Jumbotron} from 'react-bootstrap'
+import EditAssessment from './EditAssessment';
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
@@ -14,10 +16,10 @@ class Assessment extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('http://10.44.50.37:8084/assessment/')
+        API.get('/assessment/')
             .then(response => {
-                console.log(response.data)
-                this.setState({ posts: response.data })
+                console.log(response.data.data)
+                this.setState({ posts: response.data.data })
             })
             .catch(error => {
                 console.log(error);
@@ -28,13 +30,17 @@ class Assessment extends React.Component {
     render() {
         const { posts, errorMsg } = this.state
         return (
-            <div className='Manage'>
-                <p>List of Students are as follows: -
-                </p>
-                <table border='5' className="List" align='center' cellPadding='7'>
+            <Container>
+                <Jumbotron>
+
+                
+                <h2>Students Assessment</h2>
+                <Table bordered striped>
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Roll No.</th>
+                            <th>Branch</th>
                             <th>Unit Test</th>
                             <th>Mid-Term Test</th>
                             <th>Final Test</th>
@@ -46,13 +52,15 @@ class Assessment extends React.Component {
                         {
                             posts.length ?
                                 posts.map(post =>
-                                    <tr key={post.studentRollNumber}>
-                                        <td>{post.studentRollNumber}</td>
-                                        <td>{post.unitTest}</td>
-                                        <td>{post.midTermTest}</td>
-                                        <td>{post.finalTest}</td>
-                                        <td>{post.grade}</td>
-                                        <td><button className='table-buttons'>Edit</button></td>
+                                    <tr key={post.student.rollNo}>
+                                        <td>{post.student.name}</td>
+                                        <td>{post.student.rollNo}</td>
+                                        <td>{post.student.branch}</td>
+                                        <td>{post.assessment.unitTest}</td>
+                                        <td>{post.assessment.midTermTest}</td>
+                                        <td>{post.assessment.finalTest}</td>
+                                        <td>{post.assessment.grade}</td>
+                                        {<td><EditAssessment assessment={post}/></td>}
                                     </tr>
                                 ) :
                                 null
@@ -68,8 +76,9 @@ class Assessment extends React.Component {
 
                         }
                     </tbody>
-                </table>
-            </div>
+                </Table>
+                </Jumbotron>
+            </Container>
         )
     }
 

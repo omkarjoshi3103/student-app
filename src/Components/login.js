@@ -30,7 +30,9 @@ class Login extends Component {
         }
     }
 
-   
+    async componentDidMount(){
+
+    }
 
     handleValidation=(event)=>{
         const {name,value} = event.target;
@@ -69,7 +71,7 @@ class Login extends Component {
             this.setState({submitted:true})
             /* this.props.changeLoginState(); */
             /* this.login(); */
-            API.post("/assessment/login", {
+            API.post("/user/login", {
                 "username": this.state.username,
                 "password": this.state.password
             }).then((response) => {
@@ -79,19 +81,26 @@ class Login extends Component {
                     localStorage.setItem('token',this.state.username)
                     /* this.props.changeUsername(this.state.username); */
                     console.log('props in login',this.props)
-                    this.props.changeUsername(this.state.username);
+                    /* this.props.changeUsername(this.state.username); */
                     this.setState({ redirectToReferrer: true })
                 }
             }, (error) => {
-                console.log(error.response.status);
-                let errorStatus = error.response.status;
-                switch(errorStatus){
-                    case 404:
-                        this.setState({errorMsg:"User does not exist"});
-                        break;
-                    default:
-                        break;
+                console.log(error.message);
+                let errorStatus;
+                if(error.response){
+                    errorStatus = error.response.status;
+                    switch(errorStatus){
+                        case 404:
+                            this.setState({errorMsg:"User does not exist"});
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else{
+                    this.setState({errorMsg:error.message})
+                }
+                
             });
             console.log("form  submitted")
         }else{
@@ -100,6 +109,7 @@ class Login extends Component {
     }
 
     render() { 
+        console.log(window.location.pathname)
         const styles={color:'red'}
         const redirectToReferrer = this.state.redirectToReferrer;
         if(redirectToReferrer){
@@ -112,7 +122,7 @@ class Login extends Component {
                         <p style={styles}>{this.state.errorMsg}</p>
                         <Form>
                         <Form.Group controlId="formBasicusername">
-                            <Form.Label>username address</Form.Label>
+                            <Form.Label>Username</Form.Label>
                             <Form.Control onChange={this.handleValidation} name="username" type="username" placeholder="Enter username" />
                             <Form.Text className="text-muted">
                             We'll never share your username with anyone else.

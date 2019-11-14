@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
 import Login from '../Components/login'
-import NavBar from '../Components/Front'
+import Front from '../Components/Front'
 import NotFound from '../Components/notFound'
 /* import PrivateRoute from '../components/privateRoute' */
 import HomePage from '../Components/HomePage'
@@ -9,7 +9,7 @@ import Logout from '../Components/logout'
 import PrivateRoute from './private-route';
 import Assessment from '../Components/Assessment'
 import Manage from '../Components/Manage'
-
+import Register from '../Components/Register'
 class Routes extends React.Component {
     state = {  }
     /* constructor(props){
@@ -19,17 +19,18 @@ class Routes extends React.Component {
     }  */
     render() { 
         
-        console.log(this.props)
+        /* console.log('route',this.props.location) */
         return (
             <div>
-                <NavBar/>
+                <Front/>
                 {/* <button onClick={this.props.changeLoginState}>login</button> */}
                 <Switch>
-                    <PrivateRoute exact path="/" user={this.props.user} component={HomePage}/>
+                    {<PrivateRoute exact path="/" user={this.props.username} component={HomePage}/>}
                     <PrivateRoute path="/logout" component={Logout}/>
+                    <PrivateRoute path="/register" component={Register}/>
                     <PrivateRoute path="/assessment" component={Assessment}/>
                     <PrivateRoute path="/manage" component={Manage}/>
-                    <Route path="/login" render={()=><Login changeUsername={this.props.changeUsername}/>}/>
+                    <Route path="/login" component={Login}/>
                     <Route component={NotFound}/>
                 </Switch>
     
