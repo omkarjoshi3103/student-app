@@ -85,15 +85,22 @@ class Login extends Component {
                     this.setState({ redirectToReferrer: true })
                 }
             }, (error) => {
-                console.log(error);
-                let errorStatus = error.response.status;
-                switch(errorStatus){
-                    case 404:
-                        this.setState({errorMsg:"User does not exist"});
-                        break;
-                    default:
-                        break;
+                console.log(error.message);
+                let errorStatus;
+                if(error.response){
+                    errorStatus = error.response.status;
+                    switch(errorStatus){
+                        case 404:
+                            this.setState({errorMsg:"User does not exist"});
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                else{
+                    this.setState({errorMsg:error.message})
+                }
+                
             });
             console.log("form  submitted")
         }else{

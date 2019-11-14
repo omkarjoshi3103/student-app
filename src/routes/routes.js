@@ -9,7 +9,7 @@ import Logout from '../Components/logout'
 import PrivateRoute from './private-route';
 import Assessment from '../Components/Assessment'
 import Manage from '../Components/Manage'
-
+import Register from '../Components/Register'
 class Routes extends React.Component {
     state = {  }
     /* constructor(props){
@@ -27,6 +27,7 @@ class Routes extends React.Component {
                 <Switch>
                     {<PrivateRoute exact path="/" user={this.props.username} component={HomePage}/>}
                     <PrivateRoute path="/logout" component={Logout}/>
+                    <PrivateRoute path="/register" component={Register}/>
                     <PrivateRoute path="/assessment" component={Assessment}/>
                     <PrivateRoute path="/manage" component={Manage}/>
                     <Route path="/login" component={Login}/>
