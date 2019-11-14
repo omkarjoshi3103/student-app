@@ -3,6 +3,7 @@ import './Manage.css'
 import API from '../utils/API';
 import {Table, Container, Jumbotron} from 'react-bootstrap'
 import EditAssessment from './EditAssessment';
+import {trackPromise} from 'react-promise-tracker'
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
@@ -16,7 +17,8 @@ class Assessment extends React.Component {
     }
 
     componentDidMount() {
-        API.get('/assessment/')
+        trackPromise(
+            API.get('/assessment/')
             .then(response => {
                 console.log(response.data.data)
                 this.setState({ posts: response.data.data })
@@ -25,7 +27,9 @@ class Assessment extends React.Component {
                 console.log(error);
                 this.setState({ errorMsg: 'Error in recieving Data' });
             })
+        )
     }
+    
 
     render() {
         const { posts, errorMsg } = this.state

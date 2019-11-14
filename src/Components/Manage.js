@@ -3,6 +3,7 @@ import './Manage.css'
 import { Table, Button, Container, Jumbotron } from 'react-bootstrap';
 import EditStudent from './EditStudent';
 import API from '../utils/API';
+import { trackPromise } from 'react-promise-tracker';
 // import ViewAssesment from './ViewAssesment';
 /* import Register from './Register' */
 class Manage extends React.Component {
@@ -17,7 +18,8 @@ class Manage extends React.Component {
     }
 
     componentDidMount() {
-        API.get('student_find/getstudents/')
+        trackPromise(
+            API.get('student_find/getstudents/')
             .then(response => {
                 console.log(response.data)
                 this.setState({ posts: response.data })
@@ -25,7 +27,7 @@ class Manage extends React.Component {
             .catch(error => {
                 console.log(error);
                 this.setState({ errorMsg: 'Error in recieving Data' });
-            })
+            }))
     }
 
     
