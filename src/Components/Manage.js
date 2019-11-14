@@ -78,11 +78,9 @@ class Manage extends React.Component {
                                         </tr>
                                     ) :
                                     null
-
                             }
                         </tbody>
                     </Table>
-               
             </Jumbotron>
         </Container>
         )

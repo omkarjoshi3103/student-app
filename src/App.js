@@ -20,7 +20,7 @@ class App extends Component {
       }else{
         this.setState({loggedIn:true})
       }
-        console.log('Inside App loggedIn', this.state)
+        /* console.log('Inside App loggedIn', this.state) */
     }
     render() { 
       console.log('loggedIn',this.state.loggedIn)
