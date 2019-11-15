@@ -5,9 +5,9 @@ import API from '../utils/API'
 
   class EditModal extends Component {
     state = { 
-        unitTest:this.props.student_assessment.assessment.unitTest,
-        midTermTest:this.props.student_assessment.assessment.midTermTest,
-        finalTest:this.props.student_assessment.assessment.finalTest,
+        unitTest:'',
+        midTermTest:'',
+        finalTest:'',
         errors: {
             unitTest:'',
             midTermTest:'',
@@ -83,32 +83,11 @@ import API from '../utils/API'
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                {console.log(this.props)}
-                {this.props.student_assessment.student.name.toUpperCase()}
+                
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    
-                    <Form.Group controlId="formBasicUnitTest">
-                        <Form.Label>Unit Test</Form.Label>
-                        <Form.Control type="text"   name="unitTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.unitTest} placeholder="Enter Marks" />
-                        <span style={styles}>{this.state.errors.unitTest}</span>
-                    </Form.Group> 
-                    
-                    <Form.Group controlId="formBasicMidTermTest">
-                        <Form.Label>Mid-Term Test</Form.Label>
-                        <Form.Control type="text"  name="midTermTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.midTermTest} placeholder="Enter Marks" />
-                        <span style={styles}>{this.state.errors.midTermTest}</span>
-                    </Form.Group>
-                    
-                    <Form.Group controlId="formBasicFinalTest">
-                        <Form.Label>Final Test</Form.Label>
-                        <Form.Control type="text"  name="finalTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.finalTest} placeholder="Enter Marks" />
-                        <span style={styles}>{this.state.errors.finalTest}</span>
-                        </Form.Group>
-                  
-                </Form>
+                
             </Modal.Body>
             
             
@@ -122,7 +101,7 @@ import API from '../utils/API'
    
  
 
-class EditAssessment extends Component {
+class ViewAssessment extends Component {
     state = { modalShow:false }
     
     render() { 
@@ -130,7 +109,7 @@ class EditAssessment extends Component {
             <div>
                 <ButtonToolbar>
                     <Button variant="primary" onClick={() => this.setState({modalShow:true})}>
-                        Edit
+                        Assessment
                     </Button>
 
                     <EditModal
@@ -145,4 +124,4 @@ class EditAssessment extends Component {
 }
  
 
-export default EditAssessment;
+export default ViewAssessment;
