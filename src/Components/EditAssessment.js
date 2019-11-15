@@ -54,7 +54,7 @@ import API from '../utils/API'
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state.validity)
+        console.log('validity', this.state.validity)
         if(this.state.validity){    
             API.put('/assessment/assessment_id/'+ this.props.student_assessment.assessment.assessmentId,{
                 "assessmentId": this.props.student_assessment.assessment.assessmentId,
@@ -62,6 +62,8 @@ import API from '../utils/API'
                 "unitTest": this.state.unitTest,
                 "midTermTest": this.state.midTermTest,
                 "finalTest": this.state.finalTest,
+            }).then((resp)=>{
+                console.log(resp)
             })
             this.props.onHide()
             window.location.reload()
