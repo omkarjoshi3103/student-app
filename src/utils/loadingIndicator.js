@@ -3,7 +3,6 @@ import {usePromiseTracker} from "react-promise-tracker"
 import Loader from 'react-loader-spinner'
 const LoadingIndicator=(props)=>{
     const {promiseInProgress} = usePromiseTracker();
-    console.log('pip',promiseInProgress)
     return  promiseInProgress && (
         <div
             style={{

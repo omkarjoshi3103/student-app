@@ -1,6 +1,6 @@
 import React from 'react';
 import './Manage.css'
-import { Table, Button, Container, Jumbotron } from 'react-bootstrap';
+import { Table, Button, Container, Jumbotron} from 'react-bootstrap';
 import EditStudent from './EditStudent';
 import API from '../utils/API';
 import Delete from './Delete';
@@ -20,29 +20,23 @@ class Manage extends React.Component {
     componentDidMount() {
         API.get('student_find/getstudents/')
             .then(response => {
-                console.log(response.data)
+                /* console.log(response.data) */
                 this.setState({ posts: response.data })
             })
             .catch(error => {
                 console.log(error);
                 this.setState({ errorMsg: 'Error in recieving Data' });
             })
+            
     }
 
 
 
-    handleDelete = (data) => {
-        console.log(data);
-        // API.delete(''
 
-        // });
-}
 
 
 render() {
-    console.log(this.props.location)
     const { posts, errorMsg } = this.state
-    console.log(posts._id);
     return (
         <Container>
             <Jumbotron>
@@ -68,7 +62,8 @@ render() {
                                         <td align="center">{post.rollNo}</td>
                                         <td>{post.name}</td>
                                         <td>{post.branch}</td>
-                                        <td><ViewAssessment student={post} /></td>
+                                        {<td><ViewAssessment student={post} /></td>}
+                                        {/* <td><Button href="/viewAssessment">Assessment</Button></td> */}
                                         <td><EditStudent student={post} /></td>
                                         <td><Delete student = {post} /></td>
                                     </tr>
@@ -83,7 +78,6 @@ render() {
                                     </tr>
                                 ) :
                                 null
-
                         }
                     </tbody>
                 </Table>

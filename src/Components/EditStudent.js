@@ -3,7 +3,6 @@ import { ButtonToolbar, Button, Modal, Form, Col } from 'react-bootstrap';
 
 
 function MyVerticallyCenteredModal(props) {
-    console.log(props.student)
     
     return (
       <Modal
@@ -77,7 +76,6 @@ function MyVerticallyCenteredModal(props) {
   
 function EditStudent (props){   
     const [modalShow, setModalShow] = React.useState(false);
-        console.log(props.student)
         
         /* Object.keys(props.student).map((keyName, i)=>(
             
