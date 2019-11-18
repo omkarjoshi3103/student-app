@@ -80,13 +80,15 @@ class Login extends Component {
                     console.log(response);
                     
                     let success = response.data.success
-                    console.log(!success)
-                    if(success){
+                    console.log(typeof(success))
+                    if(success==="true"){
                         localStorage.setItem('token',this.state.username)
                         /* this.props.changeUsername(this.state.username); */
                         console.log('submitted')
                         /* this.props.changeUsername(this.state.username); */
                         this.setState({ redirectToReferrer: true })
+                    }else{
+                        this.setState({errorMsg:response.data.message});
                     }
                     
                 }, (error) => {
