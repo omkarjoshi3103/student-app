@@ -5,15 +5,29 @@ import API from '../utils/API'
 
   class EditModal extends Component {
     state = { 
-        unitTest:this.props.student_assessment.assessment.unitTest,
-        midTermTest:this.props.student_assessment.assessment.midTermTest,
-        finalTest:this.props.student_assessment.assessment.finalTest,
+        unitTest:'',
+        midTermTest:'',
+        finalTest:'',
         errors: {
             unitTest:'',
             midTermTest:'',
             finalTest:''
         },
-        validity:false
+        validity:true,
+        assessment:this.props.student_assessment.assessment
+    }
+
+    componentDidMount(){
+        API.get('/assessment/'+this.props.student.studentId)
+            .then(response => {
+                console.log('response',response)
+                this.setState({ assessment: response.data.data.assessment })
+                console.log('assessment',this.state.assessment)
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({ errorMsg: 'Error in recieving Data' });
+            })
     }
 
     handleChange=(event)=>{
@@ -52,6 +66,8 @@ import API from '../utils/API'
         })
     }
 
+    
+
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('validity', this.state.validity)
@@ -66,54 +82,68 @@ import API from '../utils/API'
                 console.log(resp)
             })
             this.props.onHide()
-            window.location.reload()
+            /* window.location.reload() */
             
         }else{
             console.log('invalid form')
         }
-
     }
+
+    
+
+    handleEdit=()=>{
+        this.setState({disabled:false})
+        this.props.changeEdit()
+    }
+    
       render() { 
         const styles = {color:'red'}
           return ( 
             <Modal
-            {...this.props}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
+                show={this.props.show}
+                onHide={this.props.onHide}
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                {console.log(this.props)}
-                {this.props.student_assessment.student.name.toUpperCase()}
+                {this.props.student_assessment.student.name}
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    
+                <Form>   
                     <Form.Group controlId="formBasicUnitTest">
                         <Form.Label>Unit Test</Form.Label>
-                        <Form.Control type="text"   name="unitTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.unitTest} placeholder="Enter Marks" />
+                        <Form.Control disabled={this.props.disabled} type="text"   name="unitTest" onChange={this.handleChange} defaultValue={this.state.assessment.unitTest} placeholder="Enter Marks" />
                         <span style={styles}>{this.state.errors.unitTest}</span>
                     </Form.Group> 
                     
                     <Form.Group controlId="formBasicMidTermTest">
                         <Form.Label>Mid-Term Test</Form.Label>
-                        <Form.Control type="text"  name="midTermTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.midTermTest} placeholder="Enter Marks" />
+                        <Form.Control disabled={this.props.disabled} type="text"  name="midTermTest" onChange={this.handleChange} defaultValue={this.state.assessment.midTermTest} placeholder="Enter Marks" />
                         <span style={styles}>{this.state.errors.midTermTest}</span>
                     </Form.Group>
                     
                     <Form.Group controlId="formBasicFinalTest">
                         <Form.Label>Final Test</Form.Label>
-                        <Form.Control type="text"  name="finalTest" onChange={this.handleChange} defaultValue={this.props.student_assessment.assessment.finalTest} placeholder="Enter Marks" />
+                        <Form.Control disabled={this.props.disabled} type="text"  name="finalTest" onChange={this.handleChange} defaultValue={this.state.assessment.finalTest} placeholder="Enter Marks" />
                         <span style={styles}>{this.state.errors.finalTest}</span>
-                        </Form.Group>
-                  
+                    </Form.Group>
+                    <Form.Group controlId="formBasic">
+                        <Form.Label>Grade</Form.Label>
+                        <Form.Control disabled type="text"  name="grade"  defaultValue={this.state.assessment.grade} />
+                        <span style={styles}>{this.state.errors.finalTest}</span>
+                    </Form.Group>
                 </Form>
             </Modal.Body>
-            
+                
             
             <Modal.Footer>
-            <Button  variant="primary" type="submit" onClick={this.handleSubmit}> Submit </Button>
+            {!this.props.edit &&
+            <Button  variant="primary" onClick={this.handleEdit}> Edit </Button>}
+            {this.props.edit &&
+            <Button  variant="primary" type="submit" onClick={this.handleSubmit}> Submit </Button>}
+            
             </Modal.Footer>
           </Modal>
         );
@@ -122,27 +152,54 @@ import API from '../utils/API'
    
  
 
-class EditAssessment extends Component {
-    state = { modalShow:false }
+class ViewAssessment extends Component {
+    state = { modalShow:false, edit:false, disabled: true, assessment:null}
     
-    render() { 
+    changeEdit=()=>{
+        this.setState({edit: !(this.state.edit), disabled: false})
+        console.log(this.state.disabled)
+    }
+
+    fetchAssessment=()=>{
+        API.get('/assessment/'+this.props.student.studentId)
+            .then(response => {
+                /* console.log(response) */
+                this.setState({ assessment: response.data.data })
+                this.setState({renderer:true})
+            })
+            .catch(error => {
+                console.log(error);
+                this.setState({ errorMsg: 'Error in recieving Data' });
+            })
+    }
+
+    
+
+    handleViewAssessment=()=>{
+        this.setState({modalShow:true})
+        this.fetchAssessment()
+    }
+
+    render(){ 
         return ( 
             <div>
                 <ButtonToolbar>
-                    <Button variant="primary" onClick={() => this.setState({modalShow:true})}>
-                        Edit
+                    <Button variant="primary" onClick={this.handleViewAssessment}>
+                        Assessment
                     </Button>
-
-                    <EditModal
-                        student_assessment = {this.props.assessment}
-                        show={this.state.modalShow}
-                        onHide={() => this.setState({modalShow:false})}
-                    />
+                    {this.state.renderer && <EditModal
+                                            student_assessment = {this.state.assessment}
+                                            show={this.state.modalShow}
+                                            onHide={()=>this.setState({modalShow:false, edit:false, disabled:true, renderer:false})}
+                                            changeEdit={this.changeEdit}
+                                            edit={this.state.edit}
+                                            disabled={this.state.disabled}
+                                            student={this.props.student}
+                                        />}
                 </ButtonToolbar>
             </div>
          );
     }
 }
- 
 
-export default EditAssessment;
+export default ViewAssessment;

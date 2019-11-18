@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Container, Jumbotron } from 'react-bootstrap';
 import {Redirect} from 'react-router-dom'
 import API from '../utils/API'
+import {trackPromise} from 'react-promise-tracker'
 class Login extends Component {
 
     state={
@@ -68,40 +69,47 @@ class Login extends Component {
     handleSubmit=(event)=>{
         event.preventDefault();
         if(this.state.validity){
-            this.setState({submitted:true})
+            this.setState({submitted:true});
             /* this.props.changeLoginState(); */
             /* this.login(); */
-            API.post("/user/login", {
-                "username": this.state.username,
-                "password": this.state.password
-            }).then((response) => {
-                /* console.log(response.data.message); */
-                let data = response.data.message
-                if(data === "exist"){
-                    localStorage.setItem('token',this.state.username)
-                    /* this.props.changeUsername(this.state.username); */
-                    console.log('props in login',this.props)
-                    /* this.props.changeUsername(this.state.username); */
-                    this.setState({ redirectToReferrer: true })
-                }
-            }, (error) => {
-                console.log(error.message);
-                let errorStatus;
-                if(error.response){
-                    errorStatus = error.response.status;
-                    switch(errorStatus){
-                        case 404:
-                            this.setState({errorMsg:"User does not exist"});
-                            break;
-                        default:
-                            break;
+            trackPromise(
+                    API.post("/user/login", {
+                    "username": this.state.username,
+                    "password": this.state.password
+                }).then((response) => {
+                    console.log(response);
+                    
+                    let success = response.data.success
+                    console.log(typeof(success))
+                    if(success==="true"){
+                        localStorage.setItem('token',this.state.username)
+                        /* this.props.changeUsername(this.state.username); */
+                        console.log('submitted')
+                        /* this.props.changeUsername(this.state.username); */
+                        this.setState({ redirectToReferrer: true })
+                    }else{
+                        this.setState({errorMsg:response.data.message});
                     }
-                }
-                else{
-                    this.setState({errorMsg:error.message})
-                }
-                
-            });
+                    
+                }, (error) => {
+                    console.log(error.message);
+                    let errorStatus;
+                    if(error.response){
+                        errorStatus = error.response.status;
+                        switch(errorStatus){
+                            case 404:
+                                this.setState({errorMsg:"User does not exist"});
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else{
+                        this.setState({errorMsg:error.message})
+                    }
+                    
+                })
+            );
             console.log("form  submitted")
         }else{
             console.log("invalid form")
@@ -109,7 +117,6 @@ class Login extends Component {
     }
 
     render() { 
-        console.log(window.location.pathname)
         const styles={color:'red'}
         const redirectToReferrer = this.state.redirectToReferrer;
         if(redirectToReferrer){

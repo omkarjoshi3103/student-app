@@ -90,13 +90,19 @@ class Register extends Component {
       },
       (error)=>{
         console.log(error);
-        let errorStatus = error.response.status;
-        let errorMsg = error.response.message;
-        switch(errorStatus){
-          case 409: alert(errorMsg);
-                    break;
-          default: break;
+        
+        if(error.response){
+          let errorStatus = error.response.status;
+          let errorMsg = error.response.message;
+          switch(errorStatus){
+            case 409: alert(errorMsg);
+                      break;
+            default: break;
+          }
+        }else{
+          console.log(error.message)
         }
+        
       });
     }else{
       alert("Invalid Form");

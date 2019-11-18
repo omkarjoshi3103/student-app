@@ -10,8 +10,12 @@ import PrivateRoute from './private-route';
 import Assessment from '../Components/Assessment'
 import Manage from '../Components/Manage'
 import Register from '../Components/Register'
+import ViewAssessment from '../Components/ViewAssessment'
 class Routes extends React.Component {
-    state = {  }
+    state = { 
+        student:null
+     }
+     
     /* constructor(props){
         super(props);
         this.props.changeUsername();
@@ -19,7 +23,6 @@ class Routes extends React.Component {
     }  */
     render() { 
         
-        /* console.log('route',this.props.location) */
         return (
             <div>
                 <Front/>
@@ -29,7 +32,8 @@ class Routes extends React.Component {
                     <PrivateRoute path="/logout" component={Logout}/>
                     <PrivateRoute path="/register" component={Register}/>
                     <PrivateRoute path="/assessment" component={Assessment}/>
-                    <PrivateRoute path="/manage" component={Manage}/>
+                    <PrivateRoute path="/manage"  component={Manage}/>
+                    <PrivateRoute path="/viewAssessment" student={this.state.student} component={ViewAssessment}/>
                     <Route path="/login" component={Login}/>
                     <Route component={NotFound}/>
                 </Switch>

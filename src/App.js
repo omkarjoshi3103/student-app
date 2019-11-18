@@ -23,7 +23,6 @@ class App extends Component {
         /* console.log('Inside App loggedIn', this.state) */
     }
     render() { 
-      console.log('loggedIn',this.state.loggedIn)
         return ( 
             <Router history={this.history}>
                 <Routes 
