@@ -77,15 +77,18 @@ class Login extends Component {
                     "username": this.state.username,
                     "password": this.state.password
                 }).then((response) => {
-                    /* console.log(response.data.message); */
-                    let data = response.data.message
-                    if(data === "exist"){
+                    console.log(response);
+                    
+                    let success = response.data.success
+                    console.log(!success)
+                    if(success){
                         localStorage.setItem('token',this.state.username)
                         /* this.props.changeUsername(this.state.username); */
-                        console.log('props in login',this.props)
+                        console.log('submitted')
                         /* this.props.changeUsername(this.state.username); */
                         this.setState({ redirectToReferrer: true })
                     }
+                    
                 }, (error) => {
                     console.log(error.message);
                     let errorStatus;
@@ -112,7 +115,6 @@ class Login extends Component {
     }
 
     render() { 
-        console.log(window.location.pathname)
         const styles={color:'red'}
         const redirectToReferrer = this.state.redirectToReferrer;
         if(redirectToReferrer){
