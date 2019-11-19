@@ -76,7 +76,7 @@ class Register extends Component {
     event.preventDefault();
     console.log(this.state);
     if (this.state.validity) {
-      API.post('student_cd/', {
+      API.post('student_cd/save', {
         rollNo: this.state.rollNo,
         name: this.state.name,
         branch: this.state.branch,
