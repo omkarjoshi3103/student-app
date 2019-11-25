@@ -18,7 +18,9 @@ class Manage extends React.Component {
     }
 
     componentDidMount() {
-        API.get('student_find/getstudents/')
+        API.get('student_find/getstudents/',{headers:{
+                                                        "Authorization": "Bearer "+sessionStorage.getItem('token') 
+                                                      }})
             .then(response => {
                 /* console.log(response.data) */
                 this.setState({ posts: response.data })
@@ -40,7 +42,7 @@ render() {
     return (
         <Container>
             <Jumbotron>
-
+                {this.state.errorMsg}
                 <h2>List of Students</h2>
                 <Button className='top-right' href="/register">Add New Student</Button>
                 <Table hover striped bordered>

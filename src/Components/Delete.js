@@ -9,9 +9,13 @@ class Delete extends Component {
         event.preventDefault();
         console.log(this.props.student.studentId);
 
-        API.delete('student_cd/delete/'+this.props.student.studentId).then(response=>{
+        API.delete('student_cd/delete/'+this.props.student.studentId,
+        {headers:{
+            'Content-Type': 'application/json',
+            Authorization: "Bearer "+ sessionStorage.getItem('token')
+        }}).then(response=>{
             console.log(response);
-            alert("Student Deleted");
+            console.log("Student Deleted");
             window.location.reload();
         }).catch(error => {
             console.log(error);

@@ -4,6 +4,7 @@ import API from '../utils/API';
 import {Table, Container, Jumbotron} from 'react-bootstrap'
 import EditAssessment from './EditAssessment';
 import {trackPromise} from 'react-promise-tracker'
+import redirectToLogin from '../utils/RedirectToLogin';
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
@@ -17,15 +18,35 @@ class Assessment extends React.Component {
     }
 
     componentDidMount() {
+        console.log("Authorization:" , "Bearer "+sessionStorage.getItem('token') )
         trackPromise(
-            API.get('/assessment/')
+            
+            API.get('/assessment/', {headers:{
+                'Content-Type': 'application/json',
+                Authorization: "Bearer "+sessionStorage.getItem('token') ,
+              }})
             .then(response => {
                 console.log(response.data.data)
                 this.setState({ posts: response.data.data })
             })
             .catch(error => {
+                redirectToLogin();
                 console.log(error);
+                let errorStatus;
+                if(error.response){
+                    
+                    errorStatus = error.response.status;
+                    switch(errorStatus){
+                        case 403:
+                            console.log("error aa gyi")
+                            this.setState({errorMsg:"Access denied"});
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 this.setState({ errorMsg: 'Error in recieving Data' });
+                
             })
         )
     }

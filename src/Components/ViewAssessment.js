@@ -18,7 +18,11 @@ import API from '../utils/API'
     }
 
     componentDidMount(){
-        API.get('/assessment/'+this.props.student.studentId)
+        API.get('/assessment/'+this.props.student.studentId, 
+        {headers:{
+            'Content-Type': 'application/json',
+            Authorization: "Bearer "+sessionStorage.getItem('token')
+        }})
             .then(response => {
                 console.log('response',response)
                 this.setState({ assessment: response.data.data.assessment })
@@ -71,14 +75,23 @@ import API from '../utils/API'
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('validity', this.state.validity)
+        console.log({
+            "assessmentId": this.props.student_assessment.assessment.assessmentId,
+            "studentId": this.props.student_assessment.student.studentId,
+            "unitTest": this.state.unitTest,
+            "midTermTest": this.state.midTermTest,
+            "finalTest": this.state.finalTest});
         if(this.state.validity){    
             API.put('/assessment/assessment_id/'+ this.props.student_assessment.assessment.assessmentId,{
                 "assessmentId": this.props.student_assessment.assessment.assessmentId,
                 "studentId": this.props.student_assessment.student.studentId,
                 "unitTest": this.state.unitTest,
                 "midTermTest": this.state.midTermTest,
-                "finalTest": this.state.finalTest,
-            }).then((resp)=>{
+                "finalTest": this.state.finalTest},
+                {headers:{
+                    'Content-Type': 'application/json',
+                    Authorization: "Bearer "+ sessionStorage.getItem('token')
+                }}).then((resp)=>{
                 console.log(resp)
             })
             this.props.onHide()
@@ -161,7 +174,11 @@ class ViewAssessment extends Component {
     }
 
     fetchAssessment=()=>{
-        API.get('/assessment/'+this.props.student.studentId)
+        API.get('/assessment/'+this.props.student.studentId,
+        {headers:{
+            'Content-Type': 'application/json',
+            Authorization: "Bearer "+sessionStorage.getItem('token')
+        }})
             .then(response => {
                 /* console.log(response) */
                 this.setState({ assessment: response.data.data })

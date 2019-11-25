@@ -84,8 +84,12 @@ class Register extends Component {
         phone: this.state.phone,
         email: this.state.email,
         city: this.state.city
-      }).then((response)=>{
-        alert("Student Added Successfully");
+      },
+      {headers:{
+        'Content-Type': 'application/json',
+        Authorization: "Bearer "+ sessionStorage.getItem('token')
+    }}).then((response)=>{
+        console.log("Student Added Successfully");
         this.setState({ redirectToReferrer: true });
       },
       (error)=>{

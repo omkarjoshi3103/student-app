@@ -27,7 +27,8 @@ class Login extends Component {
             },
             validity:false,
             submitted:false,
-            redirectToReferrer: false
+            redirectToReferrer: false,
+            authorization: null
         }
     }
 
@@ -77,12 +78,14 @@ class Login extends Component {
                     "username": this.state.username,
                     "password": this.state.password
                 }).then((response) => {
-                    console.log(response);
+                  /*   console.log('login response:',response); */
+                    let authorization = response.data.authorization;
                     
                     let success = response.data.success
-                    console.log(typeof(success))
                     if(success==="true"){
-                        localStorage.setItem('token',this.state.username)
+                        /* localStorage.setItem('token',authorization) */
+                        sessionStorage.setItem('token',authorization)
+                        this.setState({authorization})
                         /* this.props.changeUsername(this.state.username); */
                         console.log('submitted')
                         /* this.props.changeUsername(this.state.username); */
@@ -120,7 +123,7 @@ class Login extends Component {
         const styles={color:'red'}
         const redirectToReferrer = this.state.redirectToReferrer;
         if(redirectToReferrer){
-            return <Redirect to="/"/>
+            return <Redirect to="manage"/>
         }
         return (
             <div>
