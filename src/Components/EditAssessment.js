@@ -83,8 +83,8 @@ import API from '../utils/API'
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                {console.log(this.props)}
-                {this.props.student_assessment.student.name.toUpperCase()}
+                {console.log('props',this.props.student_assessment.student.name.toUpperCase())}
+                {/* this.props.student_assessment.student.name.toUpperCase() */}
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>

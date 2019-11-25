@@ -4,7 +4,7 @@ import API from '../utils/API';
 import {Table, Container, Jumbotron} from 'react-bootstrap'
 import EditAssessment from './EditAssessment';
 import {trackPromise} from 'react-promise-tracker'
-import redirectToLogin from '../utils/RedirectToLogin';
+import {Redirect} from 'react-router-dom'
 // import Register from './LogReg/Register'
 class Assessment extends React.Component {
 
@@ -13,8 +13,10 @@ class Assessment extends React.Component {
         super(props);
         this.state = {
             posts: [],
-            errorMsg: ''
+            errorMsg: '',
+            redirectToReferrer:false
         }
+        
     }
 
     componentDidMount() {
@@ -26,12 +28,12 @@ class Assessment extends React.Component {
                 Authorization: "Bearer "+sessionStorage.getItem('token') ,
               }})
             .then(response => {
-                console.log(response.data.data)
+                /* console.log(response) */
                 this.setState({ posts: response.data.data })
             })
             .catch(error => {
-                redirectToLogin();
-                console.log(error);
+                /* redirectToLogin(); */
+                console.log(error.response.status);
                 let errorStatus;
                 if(error.response){
                     
@@ -39,7 +41,7 @@ class Assessment extends React.Component {
                     switch(errorStatus){
                         case 403:
                             console.log("error aa gyi")
-                            this.setState({errorMsg:"Access denied"});
+                            this.setState({errorMsg:"Access denied", redirectToReferrer:true});
                             break;
                         default:
                             break;
@@ -57,7 +59,7 @@ class Assessment extends React.Component {
         return (
             <Container>
                 <Jumbotron>
-
+                {this.state.redirectToReferrer && <Redirect to="/login"/>}
                 
                 <h2>Students Assessment</h2>
                 <Table bordered striped>
