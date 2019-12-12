@@ -25,7 +25,7 @@ class Routes extends React.Component {
         
         return (
             <div>
-                <Front/>
+                
                 {/* <button onClick={this.props.changeLoginState}>login</button> */}
                 <Switch>
                     {/* <PrivateRoute exact path="/" user={this.props.username} component={HomePage}/>
@@ -34,7 +34,7 @@ class Routes extends React.Component {
                     <PrivateRoute path="/assessment" component={Assessment}/>
                     <PrivateRoute path="/manage"  component={Manage}/>
                     <PrivateRoute path="/viewAssessment" student={this.state.student} component={ViewAssessment}/> */}
-                    <Route exact path="/" user={this.props.username} component={HomePage}/>
+                    <PrivateRoute exact path="/" user={this.props.username} component={HomePage}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/assessment" component={Assessment}/>

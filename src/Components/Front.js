@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar'
 import {  Nav, Form, Button, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import Row from 'react-bootstrap/Row';
 // import 'bootstrap/dist/css/bootstrap-theme.css';
 /* import Home from './Home';
 import Manage from './Manage'; 
@@ -33,30 +33,37 @@ class Front extends React.Component {
         evt.currentTarget.className += " active";
     } */
     /////   
-    
     componentDidMount(){
-        if (localStorage.getItem('token')!=null) {
+        if (sessionStorage.getItem('token')!=null) {
             this.setState({navLink : <Nav.Link href = '/logout'>Logout</Nav.Link>})
         } else{
             this.setState({navLink : <Nav.Link href = '/login'>Login</Nav.Link>})
-        }
-        
-                        
+        }                 
     }
     render() {
-        return <div>
+        let navLink;
+        let log_in_out;
+        if (sessionStorage.getItem('token')!=null) {
+            log_in_out = <Nav.Link href = '/logout' className="text-white">Logout</Nav.Link>
+            navLink = 
+            [
+                <Nav.Link href = '/assessment'>Assessment</Nav.Link>,
+                <Nav.Link href = '/manage'>Manage</Nav.Link>,
+            ]
+        } else{
+            log_in_out = <Nav.Link href = '/login' className="text-white">Login</Nav.Link>
+        } 
+        return (
+        <React.Fragment>
+            
             <Navbar bg="dark" variant="dark" expand="lg">
                 <Navbar.Brand href="/">Student Management</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        {/* <Nav.Link  onClick = {(evt) => this.openPage('Home',evt)}>Home</Nav.Link>
-                        <Nav.Link  onClick = {(evt) => this.openPage('Manage',evt)}>Manage</Nav.Link>
-                        <Nav.Link  onClick = {(evt) => this.openPage('Assessment',evt)}>Assessment</Nav.Link> */}
-                        <Nav.Link href = '/assessment'>Assessment</Nav.Link>
-                        <Nav.Link href = '/manage'>Manage</Nav.Link>
                         
-                            {this.state.navLink}            
+                        
+                            {navLink}            
                         
                         
 
@@ -64,10 +71,11 @@ class Front extends React.Component {
                         
                         
                     </Nav>
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button variant="outline-success">Search</Button>
-                    </Form>
+                        {log_in_out}
+
+                    <Nav>
+
+                    </Nav>
 
                 </Navbar.Collapse>
             </Navbar>
@@ -82,7 +90,9 @@ class Front extends React.Component {
                 <div id="Assessment" className="tabcontent">
                     <Assessment />
                 </div> */}
-        </div>
+        
+        </React.Fragment>
+        )
     }
 }
 

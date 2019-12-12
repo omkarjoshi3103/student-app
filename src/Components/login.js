@@ -3,6 +3,7 @@ import { Form, Button, Container, Jumbotron } from 'react-bootstrap';
 import {Redirect} from 'react-router-dom'
 import API from '../utils/API'
 import {trackPromise} from 'react-promise-tracker'
+import Front from './Front';
 class Login extends Component {
 
     state={
@@ -62,7 +63,7 @@ class Login extends Component {
         }
         validity = errors.username === "" && errors.password === ""
         this.setState({errors, validity, [name]: value}, ()=> {
-            console.log(errors)
+            /* console.log(errors) */
         })
     }
 
@@ -127,6 +128,7 @@ class Login extends Component {
         }
         return (
             <div>
+                <Front />
                 <Container>
                     <Jumbotron>
                         <p style={styles}>{this.state.errorMsg}</p>

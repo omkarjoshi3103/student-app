@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import API from '../utils/API'
 import { Button, Modal, Form, Col,  Container, Jumbotron } from 'react-bootstrap';
 import {Redirect} from 'react-router-dom'
+import Front from './Front';
 // import MyVerticallyCenteredModal from './MyVerticallyCenteredModal';
 
 /////
@@ -89,6 +90,7 @@ class Register extends Component {
         'Content-Type': 'application/json',
         Authorization: "Bearer "+ sessionStorage.getItem('token')
     }}).then((response)=>{
+      console.log(response)
         console.log("Student Added Successfully");
         this.setState({ redirectToReferrer: true });
       },
@@ -122,9 +124,11 @@ class Register extends Component {
       return <Redirect to="/manage"/>
   }
     return (
+      
       <div>
+        <Front />
         <Container>
-                    <Jumbotron>
+        <Jumbotron>
         <h2>Student Register</h2>
         <Form>
           <Form.Group >

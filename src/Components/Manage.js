@@ -5,6 +5,8 @@ import EditStudent from './EditStudent';
 import API from '../utils/API';
 import Delete from './Delete';
 import ViewAssessment from './ViewAssessment';
+import {Redirect} from 'react-router-dom'
+import Front from './Front';
 /* import Register from './Register' */
 class Manage extends React.Component {
 
@@ -28,6 +30,19 @@ class Manage extends React.Component {
             .catch(error => {
                 console.log(error);
                 this.setState({ errorMsg: 'Error in recieving Data' });
+                let errorStatus;
+                if(error.response){
+                    
+                    errorStatus = error.response.status;
+                    switch(errorStatus){
+                        case 403:
+                            console.log("error aa gyi")
+                            this.setState({errorMsg:"Access denied", redirectToReferrer:true});
+                            break;
+                        default:
+                            break;
+                    }
+                }
             })
             
     }
@@ -40,8 +55,10 @@ class Manage extends React.Component {
 render() {
     const { posts, errorMsg } = this.state
     return (
-        <Container>
-            <Jumbotron>
+        <div>
+            <Front />
+            <Container>
+                {this.state.redirectToReferrer && <Redirect to="/login"/>}
                 {this.state.errorMsg}
                 <h2>List of Students</h2>
                 <Button className='top-right' href="/register">Add New Student</Button>
@@ -83,9 +100,9 @@ render() {
                         }
                     </tbody>
                 </Table>
-
-            </Jumbotron>
-        </Container>
+            </Container>
+        </div>
+        
     )
 }
 }

@@ -179,15 +179,15 @@ class ViewAssessment extends Component {
             'Content-Type': 'application/json',
             Authorization: "Bearer "+sessionStorage.getItem('token')
         }})
-            .then(response => {
-                /* console.log(response) */
-                this.setState({ assessment: response.data.data })
-                this.setState({renderer:true})
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({ errorMsg: 'Error in recieving Data' });
-            })
+        .then(response => {
+            /* console.log(response) */
+            this.setState({ assessment: response.data.data })
+            this.setState({renderer:true})
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({ errorMsg: 'Error in recieving Data' });
+        })
     }
 
     

@@ -5,7 +5,7 @@ class Logout extends Component {
 
 
     render() { 
-        localStorage.removeItem('token')
+        sessionStorage.removeItem('token')
         /* this.props.changeLoginState(); */
         console.log(' logout',this.props)
         return ( 
