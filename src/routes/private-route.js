@@ -11,9 +11,7 @@ const PrivateRoute = ({component:Component, exact, strict, path,...rest}) => (
     )} />
 )
 
-/* const authorize=()=>{
-    API.
-} */
+
 
 export default PrivateRoute;
 

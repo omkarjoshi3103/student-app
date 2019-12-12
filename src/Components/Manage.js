@@ -1,6 +1,6 @@
 import React from 'react';
 import './Manage.css'
-import { Table, Button, Container, Jumbotron} from 'react-bootstrap';
+import { Table, Button, Container} from 'react-bootstrap';
 import EditStudent from './EditStudent';
 import API from '../utils/API';
 import Delete from './Delete';
@@ -23,28 +23,27 @@ class Manage extends React.Component {
         API.get('student_find/getstudents/',{headers:{
                                                         "Authorization": "Bearer "+sessionStorage.getItem('token') 
                                                       }})
-            .then(response => {
-                /* console.log(response.data) */
-                this.setState({ posts: response.data })
-            })
-            .catch(error => {
-                console.log(error);
-                this.setState({ errorMsg: 'Error in recieving Data' });
-                let errorStatus;
-                if(error.response){
-                    
-                    errorStatus = error.response.status;
-                    switch(errorStatus){
-                        case 403:
-                            console.log("error aa gyi")
-                            this.setState({errorMsg:"Access denied", redirectToReferrer:true});
-                            break;
-                        default:
-                            break;
-                    }
+        .then(response => {
+            /* console.log(response.data) */
+            this.setState({ posts: response.data })
+        })
+        .catch(error => {
+            console.log(error);
+            this.setState({ errorMsg: 'Error in recieving Data' });
+            let errorStatus;
+            if(error.response){
+                
+                errorStatus = error.response.status;
+                switch(errorStatus){
+                    case 403:
+                        console.log("error aa gyi")
+                        this.setState({errorMsg:"Access denied", redirectToReferrer:true});
+                        break;
+                    default:
+                        break;
                 }
-            })
-            
+            }
+        })   
     }
 
 
@@ -54,6 +53,7 @@ class Manage extends React.Component {
 
 render() {
     const { posts, errorMsg } = this.state
+    console.log(this.props.history)
     return (
         <div>
             <Front />
@@ -81,9 +81,8 @@ render() {
                                         <td align="center">{post.rollNo}</td>
                                         <td>{post.name}</td>
                                         <td>{post.branch}</td>
-                                        {<td><ViewAssessment student={post} /></td>}
-                                        {/* <td><Button href="/viewAssessment">Assessment</Button></td> */}
-                                        <td><EditStudent student={post} /></td>
+                                        <td><ViewAssessment student={post} /></td>
+                                        <td><EditStudent history={this.props.history} student={post} /></td>
                                         <td><Delete student = {post} /></td>
                                     </tr>
                                 ) :

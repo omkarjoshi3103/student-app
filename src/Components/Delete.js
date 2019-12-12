@@ -25,7 +25,7 @@ class Delete extends Component {
     render() {
         return (
             <ButtonToolbar>
-                <Button variant="primary" onClick={this.handleDelete}>
+                <Button variant="danger" onClick={this.handleDelete}>
                     Delete
                 </Button>
             </ButtonToolbar>

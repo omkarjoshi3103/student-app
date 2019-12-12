@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Front from './Front';
 class HomePage extends Component {
     state = {  }
     
@@ -9,8 +10,12 @@ class HomePage extends Component {
         
         
         return ( 
-            <div>This is Home Page. 
-                <p>Hi {localStorage.getItem('token')}</p>
+            <div>
+                <Front/>
+            
+                <div>This is Home Page. 
+                    <p>Hi {localStorage.getItem('token')}</p>
+                </div>
             </div>
         );
     }

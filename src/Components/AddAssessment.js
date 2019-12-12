@@ -120,7 +120,7 @@ import API from '../utils/API'
    
  
 
-class EditAssessment extends Component {
+class AddAssessment extends Component {
     state = { modalShow:false }
     
     render() { 
@@ -143,4 +143,4 @@ class EditAssessment extends Component {
 }
  
 
-export default EditAssessment;
+export default AddAssessment;

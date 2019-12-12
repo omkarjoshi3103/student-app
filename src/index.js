@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import LoadingIndicator from './utils/loadingIndicator';
-import Front from './Components/Front';
 
 ReactDOM.render(<div><App /> <LoadingIndicator/></div>, document.getElementById('root'));
 

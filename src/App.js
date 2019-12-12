@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Routes from "./routes/routes"
 import { Router } from "react-router-dom"
-import createHistory from 'history/createBrowserHistory'
-import Front from './Components/Front';
+import {createBrowserHistory} from 'history'
 class App extends Component {
     state = { loggedIn:false,
-        username: ""    
+        username: "",
+        history : createBrowserHistory()
     }
-    history = createHistory()
+    
 
     changeUsername=(username)=>{
         this.setState({username})
@@ -25,7 +25,7 @@ class App extends Component {
     }
     render() { 
         return ( 
-            <Router history={this.history}>
+            <Router history={this.state.history}>
                 
                 <Routes 
                     {...this.state}

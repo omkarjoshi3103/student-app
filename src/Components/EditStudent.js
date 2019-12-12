@@ -91,7 +91,9 @@ ValidationProc=(name,value)=>{
             this.setState({flagger:false})
         })
       this.props.onHide()
-      window.location.reload()
+      this.props.history.push("/temp")
+      this.props.history.goBack()
+      //window.location.reload()
     }
     }
     handleEdit=()=>{
@@ -186,16 +188,17 @@ class EditStudent extends Component{
     render(){
         return ( 
             <ButtonToolbar>
-                <Button variant="primary" onClick={this.handleRendering}>
+                <Button variant="info" onClick={this.handleRendering}>
                     Details
                 </Button>
 
                 {this.state.renderer && <StudentEditModal
+                    history={this.props.history}
                     student = {this.props.student}
                     show={this.state.modalShow}
                     onHide={()=>this.setState({modalShow:false,renderer:false,edit:true,disabled:true})}
                     changeEdit={()=>this.setState({edit:!(this.state.edit),disabled:false})}
-                    edit={this.state.edit }
+                    edit={this.state.edit} 
                     disabled={this.state.disabled}
                 />}
             </ButtonToolbar>
