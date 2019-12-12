@@ -139,7 +139,6 @@ class Register extends Component {
             <Form.Label>Roll Number</Form.Label>
             <Form.Control onChange={this.handleChange} name="rollNo" type="text" placeholder="Enter username" />
           </Form.Group>
-          <p>here</p>
           <Form.Group >
             <Form.Label>Branch</Form.Label>
             <Form.Control as="select" onChange={this.handleChange} name="branch"  >

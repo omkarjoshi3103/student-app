@@ -53,7 +53,6 @@ class Manage extends React.Component {
 
 render() {
     const { posts, errorMsg } = this.state
-    console.log(this.props.history)
     return (
         <div>
             <Front />
@@ -102,8 +101,7 @@ render() {
             </Container>
         </div>
         
-    )
-}
+    )}
 }
 
 export default Manage;

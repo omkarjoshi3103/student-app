@@ -6,13 +6,10 @@ class HomePage extends Component {
     componentWillMount(){
         
     }
-    render() { 
-        
-        
+    render() {
         return ( 
             <div>
                 <Front/>
-            
                 <div>This is Home Page. 
                     <p>Hi {localStorage.getItem('token')}</p>
                 </div>

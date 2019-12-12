@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { ButtonToolbar, Button, Modal, Form, Col } from 'react-bootstrap';
 import API from '../utils/API';
-
-
 class StudentEditModal extends Component {
    
     state = {
-        
         name:this.props.student.name,
         branch:this.props.student.branch,
         gender:this.props.student.gender,
@@ -27,7 +24,6 @@ class StudentEditModal extends Component {
         event.persist();
         const {name,value}=event.target;
         this.setState({[name]:value},()=>{this.ValidationProc(name, value)})
-       // console.log(this.state)
     }
     
 ValidationProc=(name,value)=>{
@@ -65,12 +61,10 @@ ValidationProc=(name,value)=>{
       
     })
 }
-
-    
+ 
     handleSubmit=(event)=>{
         console.log(this.state.validity)
         event.preventDefault();
-        console.log('propseee',this.state)
         if(this.state.validity){
         API.put('/student_ru/student/update',{
         "studentId": this.props.student.studentId,
@@ -206,6 +200,5 @@ class EditStudent extends Component{
         }
     
 }
- 
 export default EditStudent;
 

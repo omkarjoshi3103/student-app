@@ -29,11 +29,10 @@ class Assessment extends React.Component {
                 Authorization: "Bearer "+sessionStorage.getItem('token') ,
               }})
             .then(response => {
-                /* console.log(response) */
+                console.log(response.data.data)
                 this.setState({ posts: response.data.data })
             })
             .catch(error => {
-                /* redirectToLogin(); */
                 console.log(error.response.status);
                 let errorStatus;
                 if(error.response){

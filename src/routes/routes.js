@@ -18,8 +18,6 @@ class Routes extends React.Component {
         console.log(this.props.history)
         return (
             <div>
-                
-                
                 <Switch>
                     <PrivateRoute exact path="/" user={this.props.username} component={HomePage}/>
                     <Route path="/logout" component={Logout}/>

@@ -39,7 +39,6 @@ import API from '../utils/API'
         const {name,value} = event.target;
         this.setState({[name]:value},
             ()=>{this.validateField(name, value)})
-        /* console.log(this.state) */
     }
 
     validateField=(name, value)=>{
@@ -47,8 +46,6 @@ import API from '../utils/API'
         let errors= this.state.errors;
         const marksRegex = RegExp(/^(?:[1-9]|0[1-9]|10)$/)
         let validity = false;
-        /* const validEmailRegex = // eslint-disable-next-line 
-                        RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i); */
         switch(name){
             case 'unitTest':
                 errors.unitTest = marksRegex.test(value)?"":'Marks should be between 0 to 10';
@@ -62,9 +59,7 @@ import API from '../utils/API'
             default:
                 break;
         }
-        console.log(errors.unitTest === "" && errors.midTermTest === "" && errors.finalTest === "")
         validity = errors.unitTest === "" && errors.midTermTest === "" && errors.finalTest === "" ? true:false
-        console.log('validity ',validity)
         this.setState({errors, validity, [name]: value}, ()=> {
             console.log(errors)
         })
@@ -74,13 +69,6 @@ import API from '../utils/API'
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log('validity', this.state.validity)
-        console.log({
-            "assessmentId": this.props.student_assessment.assessment.assessmentId,
-            "studentId": this.props.student_assessment.student.studentId,
-            "unitTest": this.state.unitTest,
-            "midTermTest": this.state.midTermTest,
-            "finalTest": this.state.finalTest});
         if(this.state.validity){    
             API.put('/assessment/assessment_id/'+ this.props.student_assessment.assessment.assessmentId,{
                 "assessmentId": this.props.student_assessment.assessment.assessmentId,
@@ -163,7 +151,6 @@ import API from '../utils/API'
       }
   }
    
- 
   class AddModal extends Component {
     state = { 
         unitTest:'',
@@ -187,7 +174,6 @@ import API from '../utils/API'
     }
 
     validateField=(name, value)=>{
-        
         let errors= this.state.errors;
         const marksRegex = RegExp(/^(?:[1-9]|0[1-9]|10)$/)
         let validity = false;
@@ -213,8 +199,6 @@ import API from '../utils/API'
             console.log(errors)
         })
     }
-
-    
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -244,8 +228,6 @@ import API from '../utils/API'
         }
     }
 
-    
-
     handleEdit=()=>{
         this.setState({disabled:false})
         this.props.changeEdit()
@@ -262,11 +244,11 @@ import API from '../utils/API'
             >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                {/* {this.props.student_assessment.student.name} */}
+                {this.props.student.name}
             </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>   
+                <Form>
                     <Form.Group controlId="formBasicUnitTest">
                         <Form.Label>Unit Test</Form.Label>
                         <Form.Control  type="text"   name="unitTest" onChange={this.handleChange}  placeholder="Enter Marks" />
@@ -284,11 +266,6 @@ import API from '../utils/API'
                         <Form.Control  type="text"  name="finalTest" onChange={this.handleChange}  placeholder="Enter Marks" />
                         <span style={styles}>{this.state.errors.finalTest}</span>
                     </Form.Group>
-                    {/* <Form.Group controlId="formBasic">
-                        <Form.Label>Grade</Form.Label>
-                        <Form.Control disabled type="text"  name="grade" />
-                        <span style={styles}>{this.state.errors.grade}</span>
-                    </Form.Group> */}
                 </Form>
             </Modal.Body>
             
@@ -302,8 +279,6 @@ import API from '../utils/API'
       }
   }
    
- 
-
 class ViewAssessment extends Component {
     state = { modalShow:false, edit:false, disabled: true, assessment:null}
     
@@ -330,8 +305,6 @@ class ViewAssessment extends Component {
         })
     }
 
-    
-
     handleViewAssessment=()=>{
         this.setState({modalShow:true})
         this.fetchAssessment()
@@ -346,26 +319,26 @@ class ViewAssessment extends Component {
                     <Button variant="secondary" onClick={this.handleViewAssessment}>
                         Assessment
                     </Button>
-                    {this.state.renderer && <EditModal
-                                            student_assessment = {this.state.assessment}
-                                            show={this.state.modalShow}
-                                            onHide={()=>this.setState({modalShow:false, edit:false, disabled:true, renderer:false})}
-                                            changeEdit={this.changeEdit}
-                                            edit={this.state.edit}
-                                            disabled={this.state.disabled}
-                                            student={this.props.student}
-                                        />}
-                    {this.state.null_renderer && <AddModal
-                                            student_assessment = {this.state.assessment}
-                                            show={this.state.modalShow}
-                                            onHide={()=>this.setState({modalShow:false, edit:false, disabled:true, null_renderer:false})}
-                                            changeEdit={this.changeEdit}
-                                            edit={this.state.edit}
-                                            disabled={this.state.disabled}
-                                            student={this.props.student}
-                                        />}
-                
-
+                    {this.state.renderer && 
+                        <EditModal
+                            student_assessment = {this.state.assessment}
+                            show={this.state.modalShow}
+                            onHide={()=>this.setState({modalShow:false, edit:false, disabled:true, renderer:false})}
+                            changeEdit={this.changeEdit}
+                            edit={this.state.edit}
+                            disabled={this.state.disabled}
+                            student={this.props.student}
+                        />}
+                    {this.state.null_renderer && 
+                        <AddModal
+                            student_assessment = {this.state.assessment}
+                            show={this.state.modalShow}
+                            onHide={()=>this.setState({modalShow:false, edit:false, disabled:true, null_renderer:false})}
+                            changeEdit={this.changeEdit}
+                            edit={this.state.edit}
+                            disabled={this.state.disabled}
+                            student={this.props.student}
+                        />}
                 </ButtonToolbar>
             </div>
          );
