@@ -15,14 +15,13 @@ class Routes extends React.Component {
      }
 
     render() { 
-        console.log(this.props.history)
         return (
             <div>
                 <Switch>
                     <PrivateRoute exact path="/" user={this.props.username} component={HomePage}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/register" component={Register}/>
-                    <Route path="/assessment" component={Assessment}/>
+                    <Route path="/assessment" history={this.props.history} component={Assessment}/>
                     <Route path="/manage" history={this.props.history} component={Manage}/>
                     <Route path="/viewAssessment" student={this.state.student} component={ViewAssessment}/>
                     <Route path="/login" component={Login}/>

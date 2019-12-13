@@ -90,7 +90,7 @@ class Assessment extends React.Component {
                                         <td>{post.assessment.midTermTest}</td>
                                         <td>{post.assessment.finalTest}</td>
                                         <td>{post.assessment.grade}</td>
-                                        {<td><EditAssessment assessment={post}/></td>}
+                                        {<td><EditAssessment history={this.props.history} assessment={post}/></td>}
                                     </tr>
                                 ) :
                                 null

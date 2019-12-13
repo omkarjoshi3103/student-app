@@ -60,11 +60,15 @@ import API from '../utils/API'
                 "unitTest": this.state.unitTest,
                 "midTermTest": this.state.midTermTest,
                 "finalTest": this.state.finalTest,
-            }).then((resp)=>{
+            },{headers:{
+                'Content-Type': 'application/json',
+                Authorization: "Bearer "+ sessionStorage.getItem('token')
+            }}).then((resp)=>{
                 console.log(resp)
             })
             this.props.onHide()
-            window.location.reload()
+            this.props.history.push("/temp")
+            this.props.history.goBack()
             
         }else{
             console.log('invalid form')
@@ -137,6 +141,7 @@ class EditAssessment extends Component {
                     </Button>
 
                     <EditModal
+                        history={this.props.history}
                         student_assessment = {this.props.assessment}
                         show={this.state.modalShow}
                         onHide={() => this.setState({modalShow:false})}
