@@ -61,15 +61,16 @@ render() {
                 {this.state.errorMsg}
                 <h2>List of Students</h2>
                 <Button className='top-right' href="/register">Add New Student</Button>
-                <Table hover striped bordered>
+                <p></p>
+                <Table hover striped className=" table table-fixed">
                     <thead>
                         <tr>
-                            <th>RollNo</th>
-                            <th>Name</th>
-                            <th>Branch</th>
-                            <th>Assessment</th>
-                            <th>Details</th>
-                            <th>Delete</th>
+                            <th  scope="col" className="col-1">RollNo</th>
+                            <th  scope="col" className="col-3">Name</th>
+                            <th  scope="col" className="col-2">Branch</th>
+                            <th  scope="col" className="col-2">Assessment</th>
+                            <th  scope="col" className="col-2">Details</th>
+                            <th  scope="col" className="col-2">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,12 +78,12 @@ render() {
                             posts.length ?
                                 posts.map(post =>
                                     <tr key={post.studentId}>
-                                        <td align="center">{post.rollNo}</td>
-                                        <td>{post.name}</td>
-                                        <td>{post.branch}</td>
-                                        <td><ViewAssessment student={post} /></td>
-                                        <td><EditStudent history={this.props.history} student={post} /></td>
-                                        <td><Delete student = {post} /></td>
+                                        <th align="center" scope="row" className="col-1">{post.rollNo}</th>
+                                        <td className="col-3">{post.name}</td>
+                                        <td className="col-2">{post.branch}</td>
+                                        <td align="center" className="col-2"><ViewAssessment student={post} /></td>
+                                        <td align="center" className="col-2"><EditStudent history={this.props.history} student={post} /></td>
+                                        <td align="center" className="col-2"><Delete student = {post} /></td>
                                     </tr>
                                 ) :
                                 null

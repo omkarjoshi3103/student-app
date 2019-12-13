@@ -77,7 +77,6 @@ import API from '../utils/API'
     }
       render() { 
         const styles = {color:'red'}
-        let student = this.props.student_assessment.student;
           return ( 
             <Modal
             {...this.props}
@@ -86,10 +85,9 @@ import API from '../utils/API'
           >
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                {console.log('props', this.props.student_assessment)}
                 { 
                     this.props.student_assessment.student.name.toUpperCase()
-                    }
+                }
                     
                  
             </Modal.Title>

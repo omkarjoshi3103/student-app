@@ -1,44 +1,26 @@
-button .top-right List{
-    border: 1px solid #ccc;
-    background-color: orangered;
-    color: white;
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
+.table-fixed tbody {
+  height: 490px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+  float: left;
+  position: relative;
+
+  &::after {
+      content: '';
+      clear: both;
+      display: block;
   }
-  
-  table{
-    align-content: center;
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  
-  button.top-right{
-    border: 1px solid #ccc;
-    background-color: orangered;
-    color: white;
-    float: right;
-    padding: 5px 15px;
-    transition: 0.3s;
-    font-size: 17px;
-  }
-  
-  .table-buttons {
-    border: 1px solid #ccc;
-    background-color: orangered;
-    color: white;
-    float: left;
-    padding: 5px 15px;
-    transition: 0.3s;
-    font-size: 17px;
-  }
-  
-  button:hover{
-    background-color: black;
-    color: white;
-  }
+}
